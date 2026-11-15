@@ -1,120 +1,111 @@
 # FelixSecure
 
-**FelixSecure** is a desktop file-encryption utility developed by **felixpatron**.  
-**FelixSecure**, **felixpatron** tarafından geliştirilen masaüstü dosya şifreleme aracıdır.
+**FelixSecure** is a desktop file-encryption utility developed by **felixpatron**.
+
+## Kullanıcılar için / For users
+
+### Türkçe
+
+Uygulamayı kullanmak için **yalnızca `FelixSecure.exe` dosyasını indirip çalıştırmanız yeterlidir.**
+
+- Python kurmanız gerekmez.
+- `cryptography`, Pillow veya OpenCV kurmanız gerekmez.
+- `requirements.txt` dosyasına ihtiyacınız yoktur.
+- Uygulama Türkçe Windows arayüz dilinde Türkçe, diğer dillerde İngilizce açılır.
+- Windows SmartScreen uyarısı gösterirse, dosyayı yalnızca resmi/güvendiğiniz dağıtım kaynağından indirdiğinizden emin olun. Tanımadığınız EXE dosyalarını çalıştırmayın.
+
+### English
+
+To use the app, **download and run only `FelixSecure.exe`.**
+
+- Python is not required.
+- You do not need to install `cryptography`, Pillow, or OpenCV.
+- You do not need `requirements.txt`.
+- The app starts in Turkish when the Windows user interface language is Turkish; otherwise it starts in English.
+- If Windows SmartScreen displays a warning, make sure the executable came from the official/trusted distribution source. Do not run EXE files from unknown sources.
 
 ---
 
-## Türkçe
+## Özellikler / Features
 
-### Özellikler
-- Fotoğraf, video, belge, ses, arşiv ve diğer dosyaları listeleme.
-- Fotoğraflar için küçük resim, videolar için örnek kare önizlemesi.
-- Dosyaları tek tek işaretleyerek şifreleme veya şifre çözme.
-- Kategori üzerinden toplu seçim ve tek tek seçimden çıkarma.
-- Türkçe ve İngilizce arayüz. Sistem dili Türkçe ise Türkçe, diğer dillerde İngilizce açılır.
-- Büyük klasörlerin taranması ve önizlemelerin hazırlanması arka planda yapılır.
-- AES-256-GCM ve PBKDF2-HMAC-SHA256 kullanılır.
-
-### Gereksinimler
-- Python 3.10 veya üzeri
-- Windows 10/11 önerilir
-
-### Kurulum
-```bash
-python -m pip install -r requirements.txt
-python FelixSecure.py
-```
-
-`requirements.txt`:
-```text
-cryptography
-Pillow
-opencv-python
-```
-
-OpenCV yüklenmezse video küçük resimleri yerine video simgesi gösterilir.
-
-### EXE oluşturma
-```bash
-python -m pip install pyinstaller
-pyinstaller --noconfirm --clean --onefile --windowed --name FelixSecure FelixSecure.py
-```
-
-Oluşan uygulama:
-```text
-dist/FelixSecure.exe
-```
-
-İkon eklemek için `felixsecure.ico` dosyanız varsa:
-```bash
-pyinstaller --noconfirm --clean --onefile --windowed --icon felixsecure.ico --name FelixSecure FelixSecure.py
-```
-
-### Güvenlik uyarısı
-- Parolanızı güvenli bir yerde saklayın. Parola kaybolursa dosyaların kurtarılması mümkün olmayabilir.
-- Şifreleme başarılı olduğunda kaynak dosya silinir. Önemli dosyalarınızı önceden yedekleyin.
-- Bu proje önemli veriler üzerinde kullanılmadan önce kopya dosyalarla test edilmelidir.
-- Büyük dosyalar belleğe tamamen alınır; çok büyük video dosyaları için akış tabanlı şifreleme daha uygundur.
-
-### Geliştirici
-- GitHub: `felixpatron`
-- Instagram: [@borantekin097](https://www.instagram.com/borantekin097)
+- Fotoğraf, video, belge, ses, arşiv ve diğer dosyaları listeleme. / Browse images, videos, documents, audio, archives and other files.
+- Fotoğraf küçük resimleri ve videolardan örnek kare önizlemesi. / Image thumbnails and video-frame previews.
+- Şifreleme/şifre çözme öncesinde dosyaları tek tek seçme. / Select individual files before encryption or decryption.
+- Kategori üzerinden toplu seçim ve dosya bazında seçim değiştirme. / Bulk category selection with per-file overrides.
+- Sistem diline göre otomatik Türkçe/İngilizce başlangıç dili. / Automatic Turkish/English startup language based on the system UI language.
+- Klasör taraması ve önizleme hazırlama işlemlerinin arka planda yapılması. / Background folder scanning and thumbnail generation.
+- AES-256-GCM and PBKDF2-HMAC-SHA256.
 
 ---
 
-## English
+## Geliştiriciler için / For developers
 
-### Features
-- Browse images, videos, documents, audio, archives and other files.
-- Image thumbnails and video-frame previews.
-- Select or deselect individual files before encryption or decryption.
-- Bulk selection by category, with per-file overrides.
-- Turkish and English interface. Turkish system locale starts in Turkish; other locales start in English.
-- Folder scanning and thumbnail generation run in background threads.
-- AES-256-GCM encryption with PBKDF2-HMAC-SHA256 key derivation.
+Aşağıdaki adımlar yalnızca Python kaynak kodundan uygulamayı kendiniz derlemek istiyorsanız gereklidir. Normal kullanıcıların bunları yapmasına gerek yoktur.
 
-### Requirements
+These steps are only needed if you want to build the application from source. Regular users do not need to follow them.
+
+### Gereksinimler / Requirements
+
 - Python 3.10 or newer
-- Windows 10/11 recommended
+- Windows 10/11 (64-bit) recommended
+- `FelixSecure.py`, `icon.ico`, and `requirements.txt` in the project folder
 
-### Installation
+### Kurulum / Install build dependencies
+
 ```bash
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-python FelixSecure.py
+python -m pip install --upgrade pyinstaller
 ```
 
 `requirements.txt`:
+
 ```text
 cryptography
 Pillow
 opencv-python
 ```
 
-If OpenCV is unavailable, video files display a generic video preview tile.
+OpenCV is used for video-frame previews. If it is not bundled correctly, video files can still be listed, but their preview may be unavailable.
 
-### Build an EXE
+### EXE oluşturma / Build the EXE
+
+Run this command from the folder containing `FelixSecure.py` and `icon.ico`:
+
 ```bash
-python -m pip install pyinstaller
-pyinstaller --noconfirm --clean --onefile --windowed --name FelixSecure FelixSecure.py
+python -m PyInstaller --noconfirm --clean --onefile --windowed --icon=icon.ico --name FelixSecure --collect-all cv2 FelixSecure.py
 ```
 
-The executable will be created at:
+The distributable file is:
+
 ```text
 dist/FelixSecure.exe
 ```
 
-To include a custom icon, place `felixsecure.ico` beside the Python file and run:
+**Dağıtım / Distribution:** Share only `dist/FelixSecure.exe` with end users. Do not ask users to install Python packages or provide the source folder for normal use.
+
+### Windows "Ordinal 380" / "Sıra sayısı 380" error
+
+If the EXE shows an error saying that ordinal 380 cannot be found, do not assume that users need to install Python packages. This is a Windows loader/dependency compatibility issue. Rebuild on Windows 10/11 (64-bit) using a current 64-bit Python installation and an updated PyInstaller. Also test the build on a separate Windows 10/11 computer.
+
+For diagnosis, first create a folder-based build with a console so a startup traceback can be seen:
+
 ```bash
-pyinstaller --noconfirm --clean --onefile --windowed --icon felixsecure.ico --name FelixSecure FelixSecure.py
+python -m PyInstaller --noconfirm --clean --onedir --console --name FelixSecure --collect-all cv2 FelixSecure.py
 ```
 
-### Security notice
-- Keep your password safe. Lost passwords cannot be recovered.
-- Original files are deleted after successful encryption. Back up important data first.
-- Test with copies of files before using the program on important data.
-- Files are currently read into memory in full. Streaming encryption is recommended for very large files.
+Run `dist\\FelixSecure\\FelixSecure.exe`. If this works but the one-file build does not, the issue is likely related to one-file bundling or a packaged dependency. If it still fails, note the Windows version, Python version (`python --version`), and whether Python is 64-bit before changing dependencies.
 
-### Developer
+---
+
+## Güvenlik uyarısı / Security notice
+
+- Parolanızı güvenli bir yerde saklayın. Parola kaybolursa dosyalarınızı kurtaramazsınız. / Keep your password safe; lost passwords cannot be recovered.
+- Şifreleme başarılı olduğunda kaynak dosya silinir. Önce yedek alın. / Original files are deleted after successful encryption. Back up files first.
+- Önemli dosyalarınızda kullanmadan önce kopyalar üzerinde test edin. / Test with copies before using it on important files.
+- Büyük dosyalar belleğe tamamen alınır. / Large files are currently read into memory in full.
+
+## Geliştirici / Developer
+
 - GitHub: `felixpatron`
 - Instagram: [@borantekin097](https://www.instagram.com/borantekin097)
